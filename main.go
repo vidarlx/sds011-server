@@ -2,13 +2,20 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 )
 
-type sensor_data struct {
-	date string
+type Properties struct {
+	ValueType string `json:"value_type"`
+	Value     string `json:"value"`
+}
+
+type SensorReads struct {
+	SensorID   string       `json:"esp8266id"`
+	SensorData []Properties `json:"sensordatavalues"`
 }
 
 func dataHandler(w http.ResponseWriter, req *http.Request) {
@@ -16,13 +23,17 @@ func dataHandler(w http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-	log.Println(string(body))
-	var t sensor_data
+	fmt.Println(string(body))
+	var t SensorReads
 	err = json.Unmarshal(body, &t)
 	if err != nil {
 		panic(err)
 	}
-	log.Println(t.date)
+
+	for k, v := range t.SensorData {
+		fmt.Println(k, v.ValueType, v.Value)
+	}
+	// fmt.Println(t)
 }
 
 func main() {
