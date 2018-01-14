@@ -38,9 +38,11 @@ func dataHandler(w http.ResponseWriter, req *http.Request) {
 
 func main() {
 	http.HandleFunc("/data", dataHandler)
-
+	fmt.Println("Server started on 9099")
 	err := http.ListenAndServe(":9099", nil)
 	if err != nil {
 		log.Fatal("ListenAndServer", err)
 	}
+
+	fmt.Println("Server started on 9099")
 }
