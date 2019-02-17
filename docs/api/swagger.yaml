@@ -1,0 +1,82 @@
+openapi: "3.0.2"
+
+info:
+  version: 1.0.0
+  title: collector
+  description: "collector"
+
+
+paths:
+  /health:
+    get:
+      description: Shows a status of the service
+      responses:
+        '200':
+          description: The service is up
+          content:
+            application/json: {}
+        '500':
+          description: The service is down
+
+  /records:
+    get:
+      description: Return all records from given period
+      responses:
+        '200':
+          description: List of valid records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Record'
+        '500':
+          description: Internal server error
+
+    post:
+      requestBody:
+        description: Adds a new record
+        required: true
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Record'
+      responses:
+        '201':
+          description: Record accepted
+        '400':
+          description: Bad request
+
+
+components:
+  schemas:
+    Record:
+      $ref: '#/components/schemas/Record'
+      type: object
+      properties:
+        pm10:
+          type: number
+          description: pm10 value
+          default: 0
+          minimum: 0
+        pm25:
+          type: number
+          description: pm 2.5 value
+          default: 0
+          minimum: 0
+        temperature:
+          type: integer
+          description: temperature
+          default: 0
+        humidity:
+          type: integer
+          description: humidity
+          default: 0
+          minimum: 0
+          maximum: 100
+        created_at:
+          type: dateTime
+          description: Date and time of measurement
+
+
+              
