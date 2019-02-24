@@ -1,9 +1,16 @@
 FROM golang
 
-ADD . /go/src/github.com/golang/ghanto/sds011-server
+WORKDIR /app
 
-RUN go install -v github.com/golang/ghanto/sds011-server
+COPY go.mod go.sum ./
+RUN go mod download
+COPY . .
 
-ENTRYPOINT /go/bin/sds011-server
+# Build binary
+ENV CGO_ENABLED=0
+ENV GOOS=linux  
+RUN go build -a -installsuffix cgo -o main .
 
-EXPOSE 9099
+COPY --from=builder /app/main .
+
+CMD ["/main"]
