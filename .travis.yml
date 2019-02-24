@@ -1,0 +1,8 @@
+language: minimal
+
+cache:
+  directories:
+    - .pkg
+
+script:
+  - ./script/test
