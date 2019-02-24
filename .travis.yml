@@ -4,5 +4,8 @@ cache:
   directories:
     - .pkg
 
+services:
+  - docker
+  
 script:
   - ./script/test
