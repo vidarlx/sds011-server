@@ -7,11 +7,13 @@ import (
 	"github.com/pkg/errors"
 )
 
+// SensorRepository interface signature
 type SensorRepository interface {
 	Add(ctx context.Context, record sensor.Record) error
 	Get(ctx context.Context) ([]sensor.Record, error)
 }
 
+// SdsService service signature
 type SdsService struct {
 	repo SensorRepository
 }
@@ -23,6 +25,7 @@ func NewSdsService(repo SensorRepository) *SdsService {
 	}
 }
 
+// Add an item to the repository
 func (s *SdsService) Add(ctx context.Context, record sensor.Record) error {
 	if err := s.repo.Add(ctx, record); err != nil {
 		errorMessage := "Unable to save record"
@@ -31,6 +34,7 @@ func (s *SdsService) Add(ctx context.Context, record sensor.Record) error {
 	return nil
 }
 
+// Get get all items from repository
 func (s *SdsService) Get(ctx context.Context) ([]sensor.Record, error) {
 	records, err := s.repo.Get(ctx)
 
