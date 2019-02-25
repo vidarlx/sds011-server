@@ -7,11 +7,12 @@ type properties struct {
 	Value     string `json:"value"`
 }
 
-type SensorReads struct {
+type sensorReads struct {
 	SensorID   string       `json:"esp8266id"`
 	SensorData []properties `json:"sensordatavalues"`
 }
 
+// Record single measurement record
 type Record struct {
 	PM25        float64
 	PM10        float64
