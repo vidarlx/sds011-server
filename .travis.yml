@@ -1,11 +1,8 @@
-language: minimal
+language: go
 
-cache:
-  directories:
-    - .pkg
-
-services:
-  - docker
-  
+before_script:
+  - go get github.com/golang/lint/golint
 script:
-  - ./script/test
+  - go vet ./...                             # go vet is the official Go static analyzer
+  - golint -set_exit_status $(go list ./...) # one last linter
+  - go test ./...
