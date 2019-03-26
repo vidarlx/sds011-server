@@ -21,7 +21,7 @@ func NewMockRepository(r []sensor.Record, e error) *MockSensorRepository {
 }
 
 // Add an item to the repository
-func (s *MockSensorRepository) Add(ctx context.Context, record sensor.Record) error {
+func (s *MockSensorRepository) Add(ctx context.Context, record []byte) error {
 	return s.err
 }
 

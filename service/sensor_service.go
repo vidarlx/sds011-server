@@ -2,14 +2,15 @@ package service
 
 import (
 	"context"
+	"fmt"
 
-	sensor "github.com/ghanto/sds011-server/entity"
+	"github.com/ghanto/sds011-server/entity"
 	"github.com/pkg/errors"
 )
 
 // SensorRepository interface signature
 type SensorRepository interface {
-	Add(ctx context.Context, record sensor.Record) error
+	Add(ctx context.Context, record []byte) error
 	Get(ctx context.Context) ([]sensor.Record, error)
 }
 
@@ -27,7 +28,9 @@ func NewSdsService(repo SensorRepository) *SdsService {
 
 // Add an item to the repository
 func (s *SdsService) Add(ctx context.Context, record sensor.Record) error {
-	if err := s.repo.Add(ctx, record); err != nil {
+	serialized := s.serialize(ctx, record)
+
+	if err := s.repo.Add(ctx, serialized); err != nil {
 		errorMessage := "Unable to save record"
 		return errors.Wrap(err, errorMessage)
 	}
@@ -44,4 +47,9 @@ func (s *SdsService) Get(ctx context.Context) ([]sensor.Record, error) {
 	}
 
 	return records, nil
+}
+
+func (s *SdsService) serialize(ctx context.Context, record sensor.Record) []byte {
+	serialized := []byte(fmt.Sprintf("%v", record))
+	return serialized
 }
