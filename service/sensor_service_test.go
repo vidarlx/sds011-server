@@ -17,7 +17,7 @@ func TestSdsService_Add(t *testing.T) {
 		createError   error
 		expectedError error
 	}{
-		"evertyhing fine": {
+		"everything fine": {
 			record:        sensor.Record{},
 			createError:   nil,
 			expectedError: nil,
@@ -79,7 +79,6 @@ func TestSdsService_Get(t *testing.T) {
 			sensorService := NewSdsService(repo)
 
 			records, err := sensorService.Get(context.Background())
-			fmt.Println(records)
 			if err != nil {
 				errCause := errors.Cause(err)
 				if fmt.Sprintf("%v", errCause) != fmt.Sprintf("%v", tc.expectedError) {
