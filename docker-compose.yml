@@ -2,11 +2,26 @@ version: "3.2"
 
 services:
   app:
-    image: golang:1.11-alpine
+    image: golang:1.11
     working_dir: /app
     volumes:
       - .:/app
-      - .pkg:/go/pkg
+      - .pkg:/go/pkgw
     ports:
       - "9999:9999"
     command: ["go", "run", "main.go"]
+  database:
+    image: "postgres:10.6-alpine"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=smog_entries
+    ports:
+      - "5432:5432"
+  migration:
+    image: "migrate/migrate"
+    depends_on:
+      - database
+    volumes:
+      - ./migration:/migration
+    command: -path /migration -database postgres://postgres:postgres@database:5432/smog_entries?sslmode=disable -verbose up
