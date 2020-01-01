@@ -9,4 +9,12 @@ services:
       - .pkg:/go/pkg
     ports:
       - "9999:9999"
+    depends_on:
+      - db
     command: ["go", "run", "main.go"]
+
+  db:
+    image: amazon/dynamodb-local
+    ports:
+      - 8000:8000
+
