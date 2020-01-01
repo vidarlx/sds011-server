@@ -1,0 +1,1 @@
+docker run --rm  -e GOPATH=/go -v %cd%:/data -w /data quay.io/goswagger/swagger:v0.17.0 generate model -f ./docs/api/swagger.yaml -t handler

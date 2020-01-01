@@ -1,9 +1,9 @@
-package service
+package application
 
 import (
 	"context"
 
-	sensor "github.com/ghanto/sds011-server/entity"
+	sensor "github.com/ghanto/sds011-server/pkg/sensor/domain"
 )
 
 // MockSensorRepository mock repository structure

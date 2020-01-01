@@ -1,10 +1,10 @@
-package service
+package application
 
 import (
 	"context"
 	"fmt"
 
-	"github.com/ghanto/sds011-server/entity"
+	sensor "github.com/ghanto/sds011-server/pkg/sensor/domain"
 	"github.com/pkg/errors"
 )
 

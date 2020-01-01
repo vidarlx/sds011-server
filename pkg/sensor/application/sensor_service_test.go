@@ -1,4 +1,4 @@
-package service
+package application
 
 import (
 	"context"
@@ -7,7 +7,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	sensor "github.com/ghanto/sds011-server/entity"
+	sensor "github.com/ghanto/sds011-server/pkg/sensor/domain"
 	"github.com/pkg/errors"
 )
 
@@ -45,15 +45,13 @@ func TestSdsService_Add(t *testing.T) {
 }
 
 func TestSdsService_Get(t *testing.T) {
-	mockRecords := []sensor.Record{
-		sensor.Record{
-			PM10: 12,
-			PM25: 14,
-		},
-		sensor.Record{
-			PM10: 15,
-			PM25: 20,
-		},
+	mockRecords := []sensor.Record{{
+		PM10: 12,
+		PM25: 14,
+	}, {
+		PM10: 15,
+		PM25: 20,
+	},
 	}
 
 	testCases := map[string]struct {
