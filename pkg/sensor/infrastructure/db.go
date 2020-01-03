@@ -6,10 +6,12 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
+// PostgresDatabase postgres db handler
 type PostgresDatabase struct {
 	db *sqlx.DB
 }
 
+// NewPostgresDb creates new instance of the postgres db
 func NewPostgresDb(databaseURL string) (*PostgresDatabase, error) {
 	db, err := sqlx.Connect("postgres", databaseURL)
 	if err != nil {
@@ -18,6 +20,7 @@ func NewPostgresDb(databaseURL string) (*PostgresDatabase, error) {
 	return &PostgresDatabase{db}, nil
 }
 
+// RunMigrations runs a set of migrations of db
 func (pg PostgresDatabase) RunMigrations() error {
 	driver, err := postgres.WithInstance(pg.db.DB, &postgres.Config{})
 	if err != nil {
